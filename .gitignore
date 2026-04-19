@@ -1,0 +1,29 @@
+# Android Studio / IntelliJ
+.idea/
+*.iml
+.gradle/
+build/
+captures/
+.externalNativeBuild
+.cxx/
+local.properties
+
+# Gradle
+.gradle
+gradlew
+gradlew.bat
+gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.properties
+
+# Build artifacts
+*.apk
+*.bundle
+*.aar
+
+# Keystores
+*.keystore
+!debug.keystore
+
+# System files
+.DS_Store
+Thumbs.db
