@@ -4,23 +4,23 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.remember
-import com.rider.tv.data.IptvApiService
+import com.rider.tv.data.MovieApiService
 import com.rider.tv.ui.DashboardScreen
-import com.rider.tv.viewmodel.IptvViewModel
+import com.rider.tv.viewmodel.MovieViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        // In a real app, use DI. Here we build manually for speed as per God Mode.
-        val api = IptvApiService.create("http://poraquivamosentrando.vip") // extracted from legacy
-        val viewModel = IptvViewModel(api)
+        // Build API client
+        val api = MovieApiService.create("http://api.movieplatform.pro")
+        val viewModel = MovieViewModel(api)
 
         setContent {
             DashboardScreen(viewModel = viewModel)
         }
         
-        // Mocking login for now to trigger data load
-        viewModel.loadData("dummy_user", "dummy_pass")
+        // Trigger data load for the current logged-in user (Test ID: e6388e35-2791-4da7-947b-053fe761aed5)
+        viewModel.loadData("e6388e35-2791-4da7-947b-053fe761aed5")
     }
 }

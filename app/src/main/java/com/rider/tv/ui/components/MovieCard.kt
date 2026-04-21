@@ -26,6 +26,7 @@ import com.rider.tv.ui.theme.RiderBlue
 fun MovieCard(
     title: String,
     imageUrl: String?,
+    onFocus: () -> Unit = {},
     onClick: () -> Unit
 ) {
     var isFocused by remember { mutableStateOf(false) }
@@ -37,7 +38,10 @@ fun MovieCard(
             .width(160.dp)
             .height(240.dp)
             .scale(scale)
-            .onFocusChanged { isFocused = it.isFocused }
+            .onFocusChanged { 
+                isFocused = it.isFocused 
+                if (it.isFocused) onFocus()
+            }
             .shadow(
                 elevation = if (isFocused) 20.dp else 4.dp,
                 shape = RoundedCornerShape(12.dp),

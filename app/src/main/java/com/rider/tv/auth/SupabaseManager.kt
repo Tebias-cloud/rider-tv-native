@@ -1,9 +1,13 @@
 package com.rider.tv.auth
 
-import io.github.janitenert.supabase.SupabaseClient
-import io.github.janitenert.supabase.createSupabaseClient
-import io.github.janitenert.supabase.gotrue.GoTrue
-import io.github.janitenert.supabase.postgrest.Postgrest
+import io.github.jan.supabase.SupabaseClient
+import io.github.jan.supabase.createSupabaseClient
+import io.github.jan.supabase.auth.auth
+import io.github.jan.supabase.auth.Auth
+import io.github.jan.supabase.postgrest.postgrest
+import io.github.jan.supabase.postgrest.Postgrest
+import io.github.jan.supabase.postgrest.query.Columns
+import com.rider.tv.data.model.ExternalAccount
 
 object SupabaseManager {
     private const val SUPABASE_URL = "https://eckvrldsejxpcpkufyhq.supabase.co"
@@ -13,9 +17,22 @@ object SupabaseManager {
         supabaseUrl = SUPABASE_URL,
         supabaseKey = SUPABASE_KEY
     ) {
-        install(GoTrue)
+        install(Auth)
         install(Postgrest)
     }
 
-    // Auth methods would go here
+    // User access
+    suspend fun getExternalAccount(userId: String): ExternalAccount? {
+        return try {
+            val res = client.postgrest.from("external_accounts")
+                .select(columns = Columns.list("username", "password", "portal_url")) {
+                    filter {
+                        eq("user_id", userId)
+                    }
+                }.decodeSingleOrNull<ExternalAccount>()
+            res
+        } catch (e: Exception) {
+            null
+        }
+    }
 }

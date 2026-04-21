@@ -39,8 +39,9 @@ dependencies {
     implementation(composeBom)
 
     // Android TV Compose
-    implementation("androidx.tv:tv-foundation:1.0.0-alpha11")
-    implementation("androidx.tv:tv-material:1.0.0-alpha11")
+    implementation("androidx.tv:tv-foundation:1.0.0-rc01")
+    implementation("androidx.tv:tv-material:1.1.0-rc01")
+    implementation("androidx.compose.material3:material3")
 
     // Core Android
     implementation("androidx.core:core-ktx:1.15.0")
@@ -59,8 +60,12 @@ dependencies {
 
     // Supabase
     implementation("io.github.jan-tennert.supabase:postgrest-kt:3.0.3")
-    implementation("io.github.jan-tennert.supabase:gotrue-kt:3.0.3")
+    implementation("io.github.jan-tennert.supabase:auth-kt:3.0.3")
     implementation("io.ktor:ktor-client-okhttp:3.0.3")
+
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
 
     // Image loading
     implementation("io.coil-kt:coil-compose:2.7.0")

@@ -27,3 +27,7 @@ gradle/wrapper/gradle-wrapper.properties
 # System files
 .DS_Store
 Thumbs.db
+
+# Rider TV session logs
+*.txt
+.vscode/

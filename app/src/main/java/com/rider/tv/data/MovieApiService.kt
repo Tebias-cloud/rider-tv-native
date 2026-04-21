@@ -6,29 +6,29 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface IptvApiService {
+interface MovieApiService {
     @GET("player_api.php")
     suspend fun getLiveCategories(
         @Query("username") user: String,
         @Query("password") pass: String,
-        @Query("action") action: String = "get_live_categories"
+        @Query("action") action: String = "get_movie_categories"
     ): List<Category>
 
     @GET("player_api.php")
     suspend fun getLiveStreams(
         @Query("username") user: String,
         @Query("password") pass: String,
-        @Query("action") action: String = "get_live_streams"
+        @Query("action") action: String = "get_movie_streams"
     ): List<Stream>
 
     companion object {
-        private const val USER_AGENT = "VLC/3.0.18 LibVLC/3.0.18"
+        private const val USER_AGENT = "MoviePlatform/1.0"
 
-        fun create(baseUrl: String): IptvApiService {
+        fun create(baseUrl: String): MovieApiService {
             val loggingInterceptor = HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             }
@@ -50,7 +50,7 @@ interface IptvApiService {
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-                .create(IptvApiService::class.java)
+                .create(MovieApiService::class.java)
         }
     }
 }

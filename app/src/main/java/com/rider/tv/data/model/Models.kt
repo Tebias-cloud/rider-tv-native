@@ -14,6 +14,11 @@ data class Stream(
     @SerializedName("stream_type") val streamType: String,
     @SerializedName("stream_id") val streamId: Int,
     @SerializedName("stream_icon") val streamIcon: String?,
-    @SerializedName("category_id") val categoryId: String,
-    // Add other fields as needed for VOD/Live
+    @SerializedName("category_id") val categoryId: String
+)
+
+data class ExternalAccount(
+    @SerializedName("username") val username: String,
+    @SerializedName("password") val password: String,
+    @SerializedName("portal_url") val portalUrl: String
 )
