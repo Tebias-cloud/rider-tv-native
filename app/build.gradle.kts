@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {
@@ -62,6 +63,7 @@ dependencies {
     implementation("io.github.jan-tennert.supabase:postgrest-kt:3.0.3")
     implementation("io.github.jan-tennert.supabase:auth-kt:3.0.3")
     implementation("io.ktor:ktor-client-okhttp:3.0.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.11.0")

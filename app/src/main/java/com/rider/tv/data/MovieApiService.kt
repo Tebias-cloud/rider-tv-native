@@ -12,17 +12,17 @@ import retrofit2.http.Query
 
 interface MovieApiService {
     @GET("player_api.php")
-    suspend fun getLiveCategories(
+    suspend fun getMovieCategories(
         @Query("username") user: String,
         @Query("password") pass: String,
-        @Query("action") action: String = "get_movie_categories"
+        @Query("action") action: String = "get_vod_categories"
     ): List<Category>
 
     @GET("player_api.php")
-    suspend fun getLiveStreams(
+    suspend fun getMovieStreams(
         @Query("username") user: String,
         @Query("password") pass: String,
-        @Query("action") action: String = "get_movie_streams"
+        @Query("action") action: String = "get_vod_streams"
     ): List<Stream>
 
     companion object {

@@ -3,6 +3,7 @@ package com.rider.tv.ui.components
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -42,6 +43,7 @@ fun MovieCard(
                 isFocused = it.isFocused 
                 if (it.isFocused) onFocus()
             }
+            .clickable { onClick() }
             .shadow(
                 elevation = if (isFocused) 20.dp else 4.dp,
                 shape = RoundedCornerShape(12.dp),

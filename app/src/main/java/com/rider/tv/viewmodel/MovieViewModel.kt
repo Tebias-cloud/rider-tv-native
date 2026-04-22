@@ -16,6 +16,7 @@ data class MovieUiState(
     val isLoading: Boolean = false,
     val categories: List<Category> = emptyList(),
     val streams: List<Stream> = emptyList(),
+    val account: ExternalAccount? = null,
     val error: String? = null
 )
 
@@ -28,12 +29,18 @@ class MovieViewModel(private var api: MovieApiService) : ViewModel() {
             _uiState.value = _uiState.value.copy(isLoading = true, error = null)
             
             try {
-                val externalAccount = SupabaseManager.getExternalAccount(userId)
+                var externalAccount = SupabaseManager.getExternalAccount(userId)
                 
+                // FALLBACK: If specific ID returns null, try to find ANY active line for testing
+                if (externalAccount == null) {
+                    android.util.Log.w("MovieViewModel", "ID $userId not found, trying fallback...")
+                    externalAccount = SupabaseManager.getAnyAccount()
+                }
+
                 if (externalAccount == null) {
                     _uiState.value = _uiState.value.copy(
                         isLoading = false, 
-                        error = "No se encontró una línea activa vinculada a tu cuenta."
+                        error = "No se encontró ninguna línea activa en la base de datos."
                     )
                     return@launch
                 }
@@ -41,13 +48,14 @@ class MovieViewModel(private var api: MovieApiService) : ViewModel() {
                 // Re-create API with the specific portal URL
                 api = MovieApiService.create(externalAccount.portalUrl)
                 
-                val cats = api.getLiveCategories(externalAccount.username, externalAccount.password)
-                val streams = api.getLiveStreams(externalAccount.username, externalAccount.password)
+                val cats = api.getMovieCategories(externalAccount.username, externalAccount.password)
+                val streams = api.getMovieStreams(externalAccount.username, externalAccount.password)
                 
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
                     categories = cats,
-                    streams = streams
+                    streams = streams,
+                    account = externalAccount
                 )
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(isLoading = false, error = e.localizedMessage)

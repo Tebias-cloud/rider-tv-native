@@ -94,8 +94,11 @@ fun DashboardScreen(viewModel: MovieViewModel) {
                                             imageUrl = stream.streamIcon,
                                             onFocus = { backgroundUri = stream.streamIcon },
                                             onClick = { 
-                                                // Construct the final HLS/TS URL
-                                                activeStreamUrl = "http://api.movieplatform.pro/live/user/pass/${stream.streamId}.ts"
+                                                uiState.account?.let { account ->
+                                                    val baseUrl = if (account.portalUrl.endsWith("/")) account.portalUrl else "${account.portalUrl}/"
+                                                    val extension = stream.containerExtension ?: "mp4"
+                                                    activeStreamUrl = "${baseUrl}movie/${account.username}/${account.password}/${stream.streamId}.$extension"
+                                                }
                                             }
                                         )
                                     }
